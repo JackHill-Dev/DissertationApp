@@ -5,21 +5,24 @@ using UnityEngine;
 
 public class SnapZone : MonoBehaviour
 {
-    [SerializeField] private MatrixController matController;
-
-    [SerializeField] private int index = 0;
+    //[SerializeField] private MatrixController matController;
+    public MatrixObject matObj;
     // Start is called before the first frame update
     void Start()
     {
-        if(!matController) return;
+       
     }
+    
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         MatrixObject mO = other.GetComponent<MatrixObject>();
+        
         if (mO)
         {
-            matController.SetMatrix(index, mO.GetMatrix());
+            matObj = mO;
         }
     }
+
+    
 }

@@ -18,18 +18,17 @@ public enum MatrixType
 }
 public class MatrixObject : MonoBehaviour
 {
-    public int index = 0;
-    public MatrixType type;
+    //public int index = 0;
+    [SerializeField] MatrixType type;
     
     [SerializeField] private List<Text> dropdownText;
-     private float[] matValues;
+    private float[] matValues;
      
     
     private Matrix4x4 mat;
     // Start is called before the first frame update
     void Start()
     {
-
         mat = new Matrix4x4();
         matValues = new float[4];
     }
@@ -83,27 +82,27 @@ public class MatrixObject : MonoBehaviour
                 mat.m22 = matValues[3];
                 mat.m11 = 1;
                 break;
+            
             case MatrixType.RotateZ:
                 mat.m00 = matValues[0];
                 mat.m01 = matValues[1];
                 mat.m10 = matValues[2];
                 mat.m11 = matValues[3];
                 mat.m22 = 1;
-                Debug.Log(mat.ToString());
                 break;
+            
             case MatrixType.Scale:
                 mat.SetColumn(0, new Vector4(matValues[0],0,0,0));
                 mat.SetColumn(1, new Vector4(0,matValues[1],0,0));
                 mat.SetColumn(2, new Vector4(0,0,matValues[2],0));
                 break;
+            
             case MatrixType.Translate:
                 mat.SetColumn(3, new Vector4(matValues[0], matValues[1], matValues[2],1));
                 mat.m00 = 1;
                 mat.m11 = 1;
                 mat.m22 = 1;
-                
-                Debug.Log( mat.ToString());
-                
+
                 break;
         }
         

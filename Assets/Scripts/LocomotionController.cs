@@ -41,16 +41,10 @@ public class LocomotionController : MonoBehaviour
             bool isLeftHovering = leftInteractorRay.TryGetHitInfo(out pos, out norm, out index, out validTarget);
             leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !isLeftHovering) ;
         }
-       
         
-
     }
+    
 
-    public void GetCurrentInteratorRayObject(HoverEnterEventArgs context)
-    {
-        GameObject g = context.interactable.gameObject;
-        Debug.Log(g.name);
-    }
     public bool CheckIfActivated(XRController controller)
     {
         InputHelpers.IsPressed(controller.inputDevice, teleportActivationBtn, out bool isActivated, activationThreshold);
