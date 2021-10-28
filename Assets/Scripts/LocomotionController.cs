@@ -18,15 +18,16 @@ public class LocomotionController : MonoBehaviour
     [SerializeField] XRRayInteractor leftInteractorRay;
     [SerializeField] XRRayInteractor rightInteractorRay;
 
-    private CharacterController _characterController;
+    private CharacterController characterController;
     private GameObject XRCamera;
     
     public bool enableRightTeleport { get; set; } = true;
     public bool enableLeftTeleport { get; set; } = true;
     private bool isMoving = false;
+    
     private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
         XRCamera = GetComponent<XRRig>().cameraGameObject;
     }
 
@@ -42,11 +43,11 @@ public class LocomotionController : MonoBehaviour
 
         PostionCharController();
 
-        if (_characterController.velocity.x <= float.Epsilon)
+        if (characterController.velocity.x <= float.Epsilon)
         {
             isMoving = false;
         }
-        else if(_characterController.velocity.x > float.Epsilon)
+        else if(characterController.velocity.x > float.Epsilon)
         {
             isMoving = true;
         }
@@ -56,16 +57,16 @@ public class LocomotionController : MonoBehaviour
     private void PostionCharController()
     {
         float headheight = Mathf.Clamp(XRCamera.transform.localPosition.y, 1, 2);
-        _characterController.height = headheight;
+        characterController.height = headheight;
         
         Vector3 newCenter = Vector3.zero;
-        newCenter.y = _characterController.height / 2;
-        newCenter.y += _characterController.skinWidth;
+        newCenter.y = characterController.height / 2;
+        newCenter.y += characterController.skinWidth;
 
         newCenter.x = XRCamera.transform.localPosition.x;
         newCenter.z = XRCamera.transform.localPosition.z;
 
-        _characterController.center = newCenter;
+        characterController.center = newCenter;
         
         
     }
@@ -87,6 +88,8 @@ public class LocomotionController : MonoBehaviour
         {
             bool isLeftHovering = leftInteractorRay.TryGetHitInfo(out pos, out norm, out index, out validTarget);
             leftTeleportRay.gameObject.SetActive(enableLeftTeleport && CheckIfActivated(leftTeleportRay) && !isLeftHovering) ;
+            
+            
         }
     }
 

@@ -20,8 +20,6 @@ public class HandPresence : MonoBehaviour
     void Start()
     {
         TryInit();
-
-      
     }
 
     void TryInit()
@@ -89,4 +87,6 @@ public class HandPresence : MonoBehaviour
             }
         }
     }
+    
+    
 }

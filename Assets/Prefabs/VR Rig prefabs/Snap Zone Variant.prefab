@@ -42,16 +42,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.639
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.41
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.979
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614752, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_LocalRotation.w
@@ -83,7 +95,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614779, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_Name
-      value: Snap Zone
+      value: Snap Zone Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5341640243844614780, guid: 7ba6f2622630be04fb628a697d968654, type: 3}
       propertyPath: m_AttachTransform

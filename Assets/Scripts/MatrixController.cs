@@ -15,12 +15,12 @@ public class MatrixController : MonoBehaviour
     private Matrix4x4[] mats; // Matrices currently in the snap zones
     private Matrix4x4 finalMatrix;
 
-    private List<GameObject> spheres;
+    private List<GameObject> vertices;
     
     // Model vars
     
     // Make sure model being used has read/write access on its import settings
-    [SerializeField] private MeshFilter meshFilter;
+    [SerializeField] private MeshFilter manipulatedModelMeshFilter;
     
     private Mesh manipulatedMesh;
     private Vector3[] modelVerts;
@@ -29,7 +29,7 @@ public class MatrixController : MonoBehaviour
     private void Start()
     {
         
-        manipulatedMesh = meshFilter.mesh;
+        manipulatedMesh = manipulatedModelMeshFilter.mesh;
         modelVerts = manipulatedMesh.vertices;
         orginalVerts = manipulatedMesh.vertices;
         mats = new Matrix4x4[3];
@@ -53,10 +53,10 @@ public class MatrixController : MonoBehaviour
             modelVerts[index] = finalMatrix.MultiplyPoint(modelVerts[index]);
         }
 
-        meshFilter.mesh.vertices = modelVerts;
-        meshFilter.mesh.RecalculateBounds();
+        manipulatedModelMeshFilter.mesh.vertices = modelVerts;
+        manipulatedModelMeshFilter.mesh.RecalculateBounds();
 
-        finalMatrixTMP.SetText( finalMatrix.ToString());
+        //finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
 
     }
 
@@ -67,8 +67,8 @@ public class MatrixController : MonoBehaviour
         mats[1] = Matrix4x4.zero;
         mats[2] = Matrix4x4.zero;
         
-        meshFilter.mesh.vertices = orginalVerts;
-        meshFilter.mesh.RecalculateBounds();
+        manipulatedModelMeshFilter.mesh.vertices = orginalVerts;
+        manipulatedModelMeshFilter.mesh.RecalculateBounds();
        // modelVerts = orginalVerts;
     }
 

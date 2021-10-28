@@ -5,14 +5,8 @@ using UnityEngine;
 
 public class SnapZone : MonoBehaviour
 {
-    //[SerializeField] private MatrixController matController;
+    // Currently public as the matrix controller accessing this
     public MatrixObject matObj;
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-    
 
     private void OnTriggerStay(Collider other)
     {
