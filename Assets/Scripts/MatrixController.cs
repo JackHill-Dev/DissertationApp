@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using TMPro;
+using Pixelplacement;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -16,7 +17,10 @@ public class MatrixController : MonoBehaviour
     private Matrix4x4 finalMatrix;
 
     private List<GameObject> vertices;
-    
+
+    [SerializeField] private GameObject matrixPrefab;
+    [SerializeField] private Transform spawnLocation;
+    [SerializeField] private Transform origin;
     // Model vars
     
     // Make sure model being used has read/write access on its import settings
@@ -28,16 +32,11 @@ public class MatrixController : MonoBehaviour
     
     private void Start()
     {
-        
         manipulatedMesh = manipulatedModelMeshFilter.mesh;
         modelVerts = manipulatedMesh.vertices;
         orginalVerts = manipulatedMesh.vertices;
         mats = new Matrix4x4[3];
-
-        
-
     }
-
     public void ApplyMatrices()
     {
         modelVerts = manipulatedMesh.vertices;
@@ -60,6 +59,10 @@ public class MatrixController : MonoBehaviour
 
     }
 
+    public void CreateMatrix()
+    {
+        Instantiate(matrixPrefab, spawnLocation);
+    }
     public void ResetModel()
     {
         finalMatrix = Matrix4x4.zero;
@@ -81,6 +84,26 @@ public class MatrixController : MonoBehaviour
     {
         mats[index] = mat;
     
+    }
+
+    public void AnimateTransformations()
+    {
+        // Get all the stored final transformations from the matrices
+        // Then apply them in the right order through animtions
+        
+        Transform t = manipulatedModelMeshFilter.transform;
+
+        Vector3 rotation = new Vector3(0, 0, 30);
+        
+        Quaternion q = Quaternion.Euler(rotation);
+        
+        // Translate to origin
+        Tween.Position(t, origin.position, 5f, 0f);
+        // Rotate about the origin through Z
+        Tween.Rotation(t, q, 5f, 5f);
+        // Translate back
+        Tween.Position(t, new Vector3(6, 8, 0), 5f, 10f);
+
     }
     
     
