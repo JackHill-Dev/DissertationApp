@@ -18,12 +18,15 @@ public enum MatrixType
 }
 public class MatrixObject : MonoBehaviour
 {
-    //public int index = 0;
-    [SerializeField] MatrixType type;
+    public MatrixType type;
     
     [SerializeField] private List<Text> dropdownText;
     private float[] matValues;
-     
+
+
+    public Vector3 scaleVector;
+    public Vector3 translationVector;
+    public Vector3 rotationVector;
     
     private Matrix4x4 mat;
     // Start is called before the first frame update
@@ -31,6 +34,11 @@ public class MatrixObject : MonoBehaviour
     {
         mat = new Matrix4x4();
         matValues = new float[4];
+        
+        // Initialise vectors
+        scaleVector = Vector3.zero;
+        translationVector = Vector3.zero;
+        rotationVector = Vector3.zero;
     }
 
     private void GetMatrixValues()
@@ -74,6 +82,8 @@ public class MatrixObject : MonoBehaviour
                 mat.m12 = matValues[1];
                 mat.m21 = matValues[2];
                 mat.m22 = matValues[3];
+                
+                rotationVector = new Vector3(float.Parse( dropdownText[0].text), 0, 0);
                 break;
             case MatrixType.RotateY:
                 mat.m00 = matValues[0];
@@ -81,6 +91,8 @@ public class MatrixObject : MonoBehaviour
                 mat.m20 = matValues[2];
                 mat.m22 = matValues[3];
                 mat.m11 = 1;
+                
+                rotationVector = new Vector3(0, float.Parse( dropdownText[0].text),  0);
                 break;
             
             case MatrixType.RotateZ:
@@ -89,12 +101,15 @@ public class MatrixObject : MonoBehaviour
                 mat.m10 = matValues[2];
                 mat.m11 = matValues[3];
                 mat.m22 = 1;
+
+                rotationVector = new Vector3(0, 0,  float.Parse( dropdownText[0].text));
                 break;
             
             case MatrixType.Scale:
                 mat.SetColumn(0, new Vector4(matValues[0],0,0,0));
                 mat.SetColumn(1, new Vector4(0,matValues[1],0,0));
                 mat.SetColumn(2, new Vector4(0,0,matValues[2],0));
+                scaleVector = new Vector3(matValues[0], matValues[1], matValues[2]);
                 break;
             
             case MatrixType.Translate:
@@ -102,6 +117,7 @@ public class MatrixObject : MonoBehaviour
                 mat.m00 = 1;
                 mat.m11 = 1;
                 mat.m22 = 1;
+                translationVector = new Vector3(matValues[0], matValues[1], matValues[2]);
 
                 break;
         }
