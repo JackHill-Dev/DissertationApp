@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class MatrixObject : MonoBehaviour
     public MatrixType type;
     
     [SerializeField] private List<Text> dropdownText;
+    [SerializeField] private List<Dropdown> _dropdowns;
     private float[] matValues;
 
 
@@ -39,6 +41,8 @@ public class MatrixObject : MonoBehaviour
         scaleVector = Vector3.zero;
         translationVector = Vector3.zero;
         rotationVector = Vector3.zero;
+        
+        GenerateOptions();
     }
 
     private void GetMatrixValues()
@@ -67,6 +71,21 @@ public class MatrixObject : MonoBehaviour
                 
             default: break;
                 
+        }
+    }
+
+    private void GenerateOptions()
+    {
+        if (_dropdowns.Count == 0) return;
+        foreach (var dropdown in _dropdowns)
+        {
+            dropdown.options.Clear();
+            for (int i = -12; i < 12; ++i)
+            {
+                Dropdown.OptionData _option = new Dropdown.OptionData();
+                _option.text = i.ToString();
+                dropdown.options.Add(_option);
+            }
         }
     }
     public Matrix4x4 GetMatrix()

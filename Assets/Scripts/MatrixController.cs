@@ -12,6 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class MatrixController : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI finalMatrixTMP;
+    [SerializeField]private TextMeshProUGUI selectedVertexTMP;
     
     [SerializeField] private Transform sceneUICanvasTransform;
     [SerializeField] private List<SnapZone> matrixSnapZones;
@@ -19,11 +20,9 @@ public class MatrixController : MonoBehaviour
     private Matrix4x4[] mats; 
     
     private Matrix4x4 finalMatrix;
-
     
     [SerializeField] private GameObject matrixPrefab;
     [SerializeField] private Transform spawnLocation;
-
     
     // Model vars
     
@@ -42,6 +41,9 @@ public class MatrixController : MonoBehaviour
     private Vector3 finalScale;
     private float animDuration = 5f;
     private float animDelay = 5f;
+    private Vector3 originalCoords;
+
+    private Transform originalTransform;
     
     private void Start()
     {
@@ -49,6 +51,8 @@ public class MatrixController : MonoBehaviour
         modelVerts = manipulatedMesh.vertices;
         orginalVerts = manipulatedMesh.vertices;
         mats = new Matrix4x4[3];
+        
+        selectedVertexTMP.SetText(modelVerts[0].x.ToString() + "\n" + modelVerts[0].y.ToString() + "\n" +modelVerts[0].z.ToString() + "\n");
     }
     
     // Instantly applies the final matrix to the model
@@ -76,8 +80,8 @@ public class MatrixController : MonoBehaviour
         manipulatedModelMeshFilter.mesh.RecalculateBounds();
         
         // Display the final matrix to the user
-        //finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
-
+        finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
+      
     }
     
     MeshFilter CalculateMeshTransforms(MeshFilter mf, Matrix4x4 matrix)
@@ -120,14 +124,9 @@ public class MatrixController : MonoBehaviour
                     finalRotation = Quaternion.Euler(tempMatObj.rotationVector); 
                     break;
             }
-
-            
         }
-
         
     }
-
-    
     public void CreateMatrix()
     {
         GameObject g = Instantiate(matrixPrefab, spawnLocation);
@@ -161,11 +160,10 @@ public class MatrixController : MonoBehaviour
         // Then apply them in the right order through animtions
         
         Transform t = manipulatedModelMeshFilter.transform;
-        Vector3 originalCoords = t.position;
+        originalCoords = t.position;
         
         // Translate to origin
         Tween.Position(t, origin.position, animDuration, 0f);
-        
         // Rotate about the origin through Z
         Tween.Rotation(t, finalRotation, animDuration, 5f);
         // Apply scale matrix anim
@@ -173,8 +171,19 @@ public class MatrixController : MonoBehaviour
         // Translate back
         Tween.Position(t, originalCoords, animDuration, 15f);
         // Apply translation matrix anim
-        Tween.Position(t, t.position + finalPosition, animDuration, 20f);
+        Tween.Position(t, finalPosition + t.position , animDuration, 20f);
 
+    }
+
+    public void ResetAnim()
+    {
+        Transform t = manipulatedModelMeshFilter.transform;
+        Vector3 normalScale = new Vector3(1f, 1f, 1f);
+        Quaternion q = Quaternion.identity;
+        
+        Tween.Position(t, originalCoords, 5f, 0f);
+        Tween.LocalScale(t, normalScale, 5f, 5f);
+        Tween.Rotation(t, q, 5f, 10f);
     }
     
     

@@ -600,6 +600,13 @@ MonoBehaviour:
   - {fileID: 404343746983113785}
   - {fileID: 404343745562365195}
   - {fileID: 404343747205439036}
+  _dropdowns:
+  - {fileID: 404343745412516423}
+  - {fileID: 404343745678591921}
+  - {fileID: 404343746860120058}
+  scaleVector: {x: 0, y: 0, z: 0}
+  translationVector: {x: 0, y: 0, z: 0}
+  rotationVector: {x: 0, y: 0, z: 0}
 --- !u!1 &404343745432572427
 GameObject:
   m_ObjectHideFlags: 0
