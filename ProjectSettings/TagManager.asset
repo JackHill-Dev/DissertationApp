@@ -6,6 +6,7 @@ TagManager:
   tags:
   - KeyPadKey
   - matrixField
+  - matrixValue
   layers:
   - Default
   - TransparentFX

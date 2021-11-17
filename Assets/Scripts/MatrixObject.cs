@@ -22,7 +22,7 @@ public class MatrixObject : MonoBehaviour
     public MatrixType type;
     
     [SerializeField] private List<TextMeshProUGUI> dropdownText;
-    [SerializeField] private List<Dropdown> _dropdowns;
+    //[SerializeField] private List<Dropdown> _dropdowns;
     private float[] matValues;
 
 
@@ -73,21 +73,7 @@ public class MatrixObject : MonoBehaviour
                 
         }
     }
-
-    // private void GenerateOptions()
-    // {
-    //     if (_dropdowns.Count == 0) return;
-    //     foreach (var dropdown in _dropdowns)
-    //     {
-    //         dropdown.options.Clear();
-    //         for (int i = -12; i < 12; ++i)
-    //         {
-    //             Dropdown.OptionData _option = new Dropdown.OptionData();
-    //             _option.text = i.ToString();
-    //             dropdown.options.Add(_option);
-    //         }
-    //     }
-    // }
+    
     public Matrix4x4 GetMatrix()
     {
         GetMatrixValues();
