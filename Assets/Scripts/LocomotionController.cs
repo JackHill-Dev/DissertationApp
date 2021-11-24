@@ -23,8 +23,7 @@ public class LocomotionController : MonoBehaviour
     
     public bool enableRightTeleport { get; set; } = true;
     public bool enableLeftTeleport { get; set; } = true;
-    private bool isMoving = false;
-    
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -43,14 +42,6 @@ public class LocomotionController : MonoBehaviour
 
         PostionCharController();
 
-        if (characterController.velocity.x <= float.Epsilon)
-        {
-            isMoving = false;
-        }
-        else if(characterController.velocity.x > float.Epsilon)
-        {
-            isMoving = true;
-        }
     }
     
     // Code from this tutorial: https://www.youtube.com/watch?v=6N__0jeg6k0
@@ -99,6 +90,5 @@ public class LocomotionController : MonoBehaviour
         return isActivated;
 
     }
-
-
+    
 }

@@ -41,7 +41,6 @@ public class MatrixController : MonoBehaviour
     private Vector3 finalPosition;
     private Vector3 finalScale;
     private float animDuration = 5f;
-    private float animDelay = 5f;
     private Vector3 originalCoords;
 
     private Transform originalTransform;
