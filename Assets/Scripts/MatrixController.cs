@@ -68,12 +68,7 @@ public class MatrixController : MonoBehaviour
         
         // Calculate the final matrix
         finalMatrix = mats[0] * mats[1] * mats[2];
-        
-        Debug.Log(mats[0].ToString());
-        Debug.Log(mats[1].ToString());
-        Debug.Log(mats[2].ToString());
-        Debug.Log(finalMatrix.ToString());
-        
+
         // Caluculation the final transformations for each vertex on the model
         for (int index = 0; index < modelVerts.Length; ++index)
         {
