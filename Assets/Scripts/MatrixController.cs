@@ -13,7 +13,9 @@ using Debug = UnityEngine.Debug;
 public class MatrixController : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI finalMatrixTMP;
+    [SerializeField]private TextMeshProUGUI finalVertexTMP;
     [SerializeField]private TextMeshProUGUI selectedVertexTMP;
+ 
     
     [SerializeField] private Transform sceneUICanvasTransform;
     [SerializeField] private List<SnapZone> matrixSnapZones;
@@ -52,7 +54,7 @@ public class MatrixController : MonoBehaviour
         orginalVerts = manipulatedMesh.vertices;
         mats = new Matrix4x4[3];
         
-        selectedVertexTMP.SetText(modelVerts[0].x.ToString() + "\n" + modelVerts[0].y.ToString() + "\n" +modelVerts[0].z.ToString() + "\n");
+        selectedVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" + modelVerts[0].z + "\n1");
     }
     
     // Instantly applies the final matrix to the model
@@ -81,7 +83,8 @@ public class MatrixController : MonoBehaviour
         
         // Display the final matrix to the user
         finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
-      
+        // Display the final coordiantes of the first vertex to the user
+        finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
     }
     
     MeshFilter CalculateMeshTransforms(MeshFilter mf, Matrix4x4 matrix)
