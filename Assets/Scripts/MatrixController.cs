@@ -23,8 +23,8 @@ public class MatrixController : MonoBehaviour
     private Matrix4x4[] mats; 
     
     private Matrix4x4 finalMatrix;
-    
-    [SerializeField] private GameObject matrixPrefab;
+    [SerializeField] private TMP_Dropdown matrixDd;
+    [SerializeField] private List<GameObject> matrixPrefabs;
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private KeyPad keyPad;
     // Model vars
@@ -133,7 +133,7 @@ public class MatrixController : MonoBehaviour
     public void CreateMatrix()
     {
         // Create matrix object at spawn location but also make sure the UI element on it stay visible
-        GameObject g = Instantiate(matrixPrefab, spawnLocation.position, Quaternion.identity, sceneUICanvasTransform);
+        GameObject g = Instantiate(matrixPrefabs[matrixDd.value], spawnLocation.position, Quaternion.identity, sceneUICanvasTransform);
         // Bind the reparent function to new matrix object
         g.GetComponent<XRGrabInteractable>().selectEntered.AddListener(ReparentUI);
         // When matrix is created, bind all matrix field buttons to set active field function

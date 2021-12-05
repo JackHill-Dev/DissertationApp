@@ -7,42 +7,19 @@ using UnityEngine.UI;
 public class AppManager : MonoBehaviour
 {
 
-    private bool isWireframe;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       // SwitchViewMode();
-    }
-
-    void AppStart()
+    public void AppStart()
     {
         // Called from menu, transitions user to main environment
-    }
-
-    void SwitchViewMode()
-    {
-        if (isWireframe)
-        {
-            // Set all models to wireframe mode
-        }
-        else
-        {
-            // Otherwise set to normal rendering mode
-        }
+        SceneManager.LoadScene(1);
     }
 
     public void AppRestart()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
-    void AppExit()
+    public void AppExit()
     {
+        // Only work on full build not in editor
         Application.Quit();
     }
 }
