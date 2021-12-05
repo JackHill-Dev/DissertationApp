@@ -53,8 +53,11 @@ public class MatrixController : MonoBehaviour
         modelVerts = manipulatedMesh.vertices;
         orginalVerts = manipulatedMesh.vertices;
         mats = new Matrix4x4[3];
-        
-        selectedVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" + modelVerts[0].z + "\n1");
+
+
+        Matrix4x4 world = manipulatedModelMeshFilter.transform.localToWorldMatrix;
+        var vert = modelVerts[1];// world.MultiplyPoint(modelVerts[1]);
+        selectedVertexTMP.SetText(vert.x.ToString("F2") + "\n" + vert.y.ToString("F2") + "\n" + vert.z.ToString("F2") + "\n1");
     }
     
     // Instantly applies the final matrix to the model
@@ -73,7 +76,11 @@ public class MatrixController : MonoBehaviour
         // Display the final matrix to the user
         finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
         // Display the final coordiantes of the first vertex to the user
-        finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
+
+       // Matrix4x4 world = manipulatedModelMeshFilter.transform.localToWorldMatrix;
+       var vert = modelVerts[1];// world.MultiplyPoint(modelVerts[1]);
+        
+       finalVertexTMP.SetText(vert.x.ToString("F2") + "\n" + vert.y.ToString("F2") + "\n" + vert.z.ToString("F2") + "\n1");
     }
 
     Matrix4x4 CalculateFinalMatrix()
@@ -83,17 +90,17 @@ public class MatrixController : MonoBehaviour
         // Get the current matrices held in the snap zones
         for (int i = 0; i < mats.Length; ++i)
             mats[i] = matrixSnapZones[i].matObj.GetMatrix();
-
-
-        
-        return mats[0] * mats[1] * mats[2];
+    
+        var mat = mats[0] * mats[1] * mats[2];
+        Debug.Log(mat.ToString("F2"));
+        return mat;
     }
 
     void CalculateFinalVerts()
     {
         for (int index = 0; index < modelVerts.Length; ++index)
         {
-            modelVerts[index] = finalMatrix.MultiplyPoint(modelVerts[index]);
+            modelVerts[index] = finalMatrix.MultiplyPoint3x4(modelVerts[index]);
         }
         
         
@@ -121,7 +128,7 @@ public class MatrixController : MonoBehaviour
                 case MatrixType.RotateX:
                 case MatrixType.RotateY:
                 case MatrixType.RotateZ:
-                    finalRotation = Quaternion.Euler(tempMatObj.rotationVector); 
+                    finalRotation = Quaternion.Euler(-tempMatObj.rotationVector); 
                     break;
             }
         }
@@ -164,15 +171,15 @@ public class MatrixController : MonoBehaviour
     {
         // Get all the stored final transformations from the matrices
         // Calculate the final matrix
-        finalMatrix = CalculateFinalMatrix(); 
+       // finalMatrix = CalculateFinalMatrix(); 
 
         // Caluculation the final transformations for each vertex on the model
-        CalculateFinalVerts();
+       // CalculateFinalVerts();
         
         // Display the final matrix to the user
-        finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
+       // finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
         // Display the final coordiantes of the first vertex to the user
-        finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
+       // finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
         
         // Then apply them in the right order through animtions
         
