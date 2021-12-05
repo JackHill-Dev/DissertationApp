@@ -60,23 +60,12 @@ public class MatrixController : MonoBehaviour
     // Instantly applies the final matrix to the model
     public void ApplyMatrices()
     {
-        modelVerts = manipulatedMesh.vertices;
-        
-        // Get the current matrices held in the snap zones
-        for (int i = 0; i < mats.Length; ++i)
-            mats[i] = matrixSnapZones[i].matObj.GetMatrix();
-
-        
-        
         // Calculate the final matrix
-        finalMatrix = mats[0] * mats[1] * mats[2];
+        finalMatrix = CalculateFinalMatrix(); 
 
         // Caluculation the final transformations for each vertex on the model
-        for (int index = 0; index < modelVerts.Length; ++index)
-        {
-            modelVerts[index] = finalMatrix.MultiplyPoint(modelVerts[index]);
-        }
-        
+        CalculateFinalVerts();
+
         // Apply the final transformations to the model
         manipulatedModelMeshFilter.mesh.vertices = modelVerts;
         manipulatedModelMeshFilter.mesh.RecalculateBounds();
@@ -86,23 +75,31 @@ public class MatrixController : MonoBehaviour
         // Display the final coordiantes of the first vertex to the user
         finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
     }
-    
-    MeshFilter CalculateMeshTransforms(MeshFilter mf, Matrix4x4 matrix)
+
+    Matrix4x4 CalculateFinalMatrix()
     {
-        MeshFilter tempMeshFilter = mf;
-
-        Vector3[] tempVerts = mf.mesh.vertices;
+        modelVerts = manipulatedMesh.vertices;
         
-        for (int index = 0; index < tempVerts.Length; ++index)
-        {
-            tempVerts[index] = matrix.MultiplyPoint(tempVerts[index]);
-        }
+        // Get the current matrices held in the snap zones
+        for (int i = 0; i < mats.Length; ++i)
+            mats[i] = matrixSnapZones[i].matObj.GetMatrix();
 
-        tempMeshFilter.mesh.vertices = tempVerts;
-        tempMeshFilter.mesh.RecalculateBounds();
-       
-        return tempMeshFilter;
+
+        
+        return mats[0] * mats[1] * mats[2];
     }
+
+    void CalculateFinalVerts()
+    {
+        for (int index = 0; index < modelVerts.Length; ++index)
+        {
+            modelVerts[index] = finalMatrix.MultiplyPoint(modelVerts[index]);
+        }
+        
+        
+    }
+    
+
 
     public void StoreAnims()
     {
@@ -166,6 +163,17 @@ public class MatrixController : MonoBehaviour
     public void AnimateTransformations()
     {
         // Get all the stored final transformations from the matrices
+        // Calculate the final matrix
+        finalMatrix = CalculateFinalMatrix(); 
+
+        // Caluculation the final transformations for each vertex on the model
+        CalculateFinalVerts();
+        
+        // Display the final matrix to the user
+        finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
+        // Display the final coordiantes of the first vertex to the user
+        finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
+        
         // Then apply them in the right order through animtions
         
         Transform t = manipulatedModelMeshFilter.transform;
