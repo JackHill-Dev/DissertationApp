@@ -74,11 +74,10 @@ public class MatrixController : MonoBehaviour
         manipulatedModelMeshFilter.mesh.RecalculateBounds();
         
         // Display the final matrix to the user
-        finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
-        // Display the final coordiantes of the first vertex to the user
+        finalMatrixTMP.SetText( finalMatrix.ToString("F2"));
 
-       // Matrix4x4 world = manipulatedModelMeshFilter.transform.localToWorldMatrix;
-       var vert = modelVerts[1];// world.MultiplyPoint(modelVerts[1]);
+        // Display the final coordiantes of the second vertex to the user
+       var vert = modelVerts[1];
         
        finalVertexTMP.SetText(vert.x.ToString("F2") + "\n" + vert.y.ToString("F2") + "\n" + vert.z.ToString("F2") + "\n1");
     }
@@ -126,7 +125,11 @@ public class MatrixController : MonoBehaviour
                     finalPosition = tempMatObj.translationVector;
                     break;
                 case MatrixType.RotateX:
+                    finalRotation = Quaternion.Euler(tempMatObj.rotationVector);
+                    break;
                 case MatrixType.RotateY:
+                    finalRotation = Quaternion.Euler(-tempMatObj.rotationVector);
+                    break;
                 case MatrixType.RotateZ:
                     finalRotation = Quaternion.Euler(-tempMatObj.rotationVector); 
                     break;
@@ -171,18 +174,21 @@ public class MatrixController : MonoBehaviour
     {
         // Get all the stored final transformations from the matrices
         // Calculate the final matrix
-       // finalMatrix = CalculateFinalMatrix(); 
+        finalMatrix = CalculateFinalMatrix(); 
 
         // Caluculation the final transformations for each vertex on the model
-       // CalculateFinalVerts();
+        CalculateFinalVerts();
         
         // Display the final matrix to the user
-       // finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
-        // Display the final coordiantes of the first vertex to the user
-       // finalVertexTMP.SetText(modelVerts[0].x + "\n" + modelVerts[0].y + "\n" +modelVerts[0].z + "\n1");
-        
+        finalMatrixTMP.SetText(  finalMatrix.ToString("F2"));
+        // Display the final coordiantes of the second vertex to the user
+        var vert = modelVerts[1];
+
+        finalVertexTMP.SetText(vert.x.ToString("F2") + "\n" + vert.y.ToString("F2") + "\n" + vert.z.ToString("F2") + "\n1");
+      
+
         // Then apply them in the right order through animtions
-        
+
         Transform t = manipulatedModelMeshFilter.transform;
         originalCoords = t.position;
         

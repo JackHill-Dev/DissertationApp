@@ -22,7 +22,6 @@ public class MatrixObject : MonoBehaviour
     public MatrixType type;
     
     [SerializeField] private List<TextMeshProUGUI> dropdownText;
-    //[SerializeField] private List<Dropdown> _dropdowns;
     private float[] matValues;
 
 
@@ -41,8 +40,7 @@ public class MatrixObject : MonoBehaviour
         scaleVector = Vector3.zero;
         translationVector = Vector3.zero;
         rotationVector = Vector3.zero;
-        
-       // GenerateOptions();
+       
     }
 
     private void GetMatrixValues()
