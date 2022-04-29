@@ -8,7 +8,6 @@ using Debug = UnityEngine.Debug;
 public class KeyPad : MonoBehaviour
 {
     [SerializeField] private List<Button> btns;
-    [SerializeField] private Image activeImg;
     private List<Button> inputFields;
     private Button activeField;
 
@@ -54,12 +53,6 @@ public class KeyPad : MonoBehaviour
     {
         // Set the current active field
         activeField = inputField;
-        
-        Transform activeImgTransform = activeImg.transform;
-        
-        // TODO: Fix bug where after a new matrix object is created the activeImg always stays under the UI element
-        activeImgTransform.position = new Vector3( activeField.transform.position.x, activeField.transform.position.y , activeField.transform.position.z);
-        activeImgTransform.rotation = activeField.transform.rotation;
         
         RectTransform rt = GetComponent<RectTransform>(); 
         rt.position = new Vector3(userLocation.position.x, rt.position.y, -14);

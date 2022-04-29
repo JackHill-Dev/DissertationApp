@@ -107,7 +107,7 @@ public class MatrixController : MonoBehaviour
     
 
 
-    public void StoreAnims()
+    void StoreAnims()
     {
         // Get the current matrices held in the snap zones
         for (int i = 0; i < mats.Length; ++i)
@@ -125,13 +125,13 @@ public class MatrixController : MonoBehaviour
                     finalPosition = tempMatObj.translationVector;
                     break;
                 case MatrixType.RotateX:
-                    finalRotation = Quaternion.Euler(tempMatObj.rotationVector);
+                    finalRotation = Quaternion.Euler(-tempMatObj.rotationVector);
                     break;
                 case MatrixType.RotateY:
                     finalRotation = Quaternion.Euler(-tempMatObj.rotationVector);
                     break;
                 case MatrixType.RotateZ:
-                    finalRotation = Quaternion.Euler(-tempMatObj.rotationVector); 
+                    finalRotation = Quaternion.Euler(tempMatObj.rotationVector); 
                     break;
             }
         }
@@ -172,6 +172,8 @@ public class MatrixController : MonoBehaviour
 
     public void AnimateTransformations()
     {
+        // Moved this function here to make it less confusing for the user 
+        StoreAnims();
         // Get all the stored final transformations from the matrices
         // Calculate the final matrix
         finalMatrix = CalculateFinalMatrix(); 
@@ -195,13 +197,13 @@ public class MatrixController : MonoBehaviour
         // Translate to origin
         Tween.Position(t, origin.position, animDuration, 0f);
         // Rotate about the origin through Z
-        Tween.Rotation(t, finalRotation, animDuration, 5f);
+        Tween.Rotation(t, finalRotation, animDuration, 3f);
         // Apply scale matrix anim
-        Tween.LocalScale(t, finalScale, animDuration, 10f);
+        Tween.LocalScale(t, finalScale, animDuration, 6f);
         // Translate back
-        Tween.Position(t, originalCoords, animDuration, 15f);
+        Tween.Position(t, originalCoords, animDuration, 9f);
         // Apply translation matrix anim
-        Tween.Position(t, finalPosition + t.position , animDuration, 20f);
+        Tween.Position(t, finalPosition + t.position , animDuration, 12f);
 
     }
 
